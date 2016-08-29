@@ -1,0 +1,60 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 29 11:21:38 2016
+
+@author: Michael Hart-Davis
+"""
+import os
+import netCDF4 
+import numpy as np
+import pandas as pd
+import xray
+import matplotlib.cm
+import matplotlib.pyplot as plt
+from matplotlib import colors as c
+from matplotlib.colors import ListedColormap
+from mpl_toolkits.basemap import Basemap
+
+nc = netCDF4.Dataset('/home/support/20140101000000-GLOBCURRENT-L4-CURgeo_0m-ALT_OI-v02.0-fv01.0.nc.1')
+ncx = xray.open_dataset('/home/support/20140101000000-GLOBCURRENT-L4-CURgeo_0m-ALT_OI-v02.0-fv01.0.nc.1', decode_cf=False)
+ncx
+
+#lat = ncx.variables['lat'][:]
+#lon = ncx.variables['lon'][:]
+
+#time = ncx.variables['eastward_geostrophic_current_velocity'][0]
+
+
+#fig, ax = plt.subplots(figsize=[12,8])
+#plt.pcolormesh(lon, lat, time, cmap='ocean', vmin=-2, vmax=2)
+
+#plt.colorbar()
+#plt.show()
+
+x = ncx.variables['lon'][:]
+y = ncx.variables['lat'][:]
+east = ncx.variables['eastward_geostrophic_current_velocity'][0]
+north = ncx.variables['northward_geostrophic_current_velocity'][0]
+
+
+m = Basemap(projection='cea',  # 2
+                  urcrnrlon=35, 
+                  llcrnrlon=17,
+                  urcrnrlat=-23.2, 
+                  llcrnrlat=-41.2, 
+                  resolution='h')
+
+x_map, y_map = m(*np.meshgrid(x-200, y))  # 3
+
+e = m.pcolormesh(x_map, y_map, [np.sqrt(east**2+north**2)], cmap = 'ocean', vmin=-.4, vmax=.4)
+#n = m.pcolormesh(x_map, y_map, north,  # 4
+                   #cmap='ocean', vmin=-.4, vmax=.4) 
+
+#np.sqrt(e^2+n^2)
+m.drawcoastlines(linewidth=1.0)
+m.fillcontinents()
+
+#m.drawparallels(np.arange(-40, -27, 1))
+#m.drawmeridians(np.arange(17., 35., 1))
+plt.colorbar()
+plt.show()
