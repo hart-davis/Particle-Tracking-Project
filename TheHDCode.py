@@ -14,7 +14,7 @@ import os
 import glob
 from netCDF4 import Dataset, num2date, date2num
 import numpy as np
-from numpy import empty, size, unique, diff
+from numpy import empty, size, unique, diff, asfortranarray
 
 matplotlib.rcParams.update({'font.size': 10})
 # this is the location of a high resolution model TXLA (texas something) Change in all files
