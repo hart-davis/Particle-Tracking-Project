@@ -86,7 +86,7 @@ XV, YV = np.meshgrid(xv, yv)
 XPSI, YPSI = np.meshgrid(xv, yu)
 X, Y = np.meshgrid(x, y)
    
-grid.x_u = np.asfortranatracpyrray(XU.T); grid.y_u = np.asfortranarray(YU.T)
+grid.x_u = np.asfortranarray(XU.T); grid.y_u = np.asfortranarray(YU.T)
 grid.x_v = np.asfortranarray(XV.T); grid.y_v = np.asfortranarray(YV.T)
 grid.x_rho = np.asfortranarray(X.T); grid.y_rho = np.asfortranarray(Y.T)
 grid.x_psi = np.asfortranarray(XPSI.T); grid.y_psi = np.asfortranarray(YPSI.T)
